@@ -1,11 +1,23 @@
-# app.py
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Επιτρέπει αιτήματα από το frontend
 
-@app.route("/")
+tunings = {
+    "Standard": ["E", "A", "D", "G", "B", "E"],
+    "Drop D": ["D", "A", "D", "G", "B", "E"],
+    "Open G": ["D", "G", "D", "G", "B", "D"]
+}
+
+@app.route('/')
 def home():
     return jsonify({"message": "Hello from Flask on Railway!"})
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+@app.route('/tunings')
+def get_tunings():
+    return jsonify(tunings)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
